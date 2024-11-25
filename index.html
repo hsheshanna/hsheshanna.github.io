@@ -3,21 +3,36 @@ layout: default
 ---
 
 <div class="home">
-
   <h1 class="page-heading">Posts</h1>
 
-  <ul class="post-list">
+  <div class="post-grid">
     {% for post in site.posts %}
-      <li>
-        <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
+      <div class="post-card">
+        {% if post.image %}
+          <div class="post-image" style="background-image: url('{{ post.image }}')"></div>
+        {% endif %}
+        
+        <div class="post-content">
+          <div class="post-meta">
+            <span class="post-date">{{ post.date | date: "%b %-d, %Y" }}</span>
+            {% if post.categories %}
+              <div class="post-categories">
+                {% for category in post.categories %}
+                  <span class="category-chip">{{ category }}</span>
+                {% endfor %}
+              </div>
+            {% endif %}
+          </div>
 
-        <h2>
-          <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-        </h2>
-      </li>
+          <h2 class="post-title">
+            <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+          </h2>
+          
+          {% if post.excerpt %}
+            <p class="post-excerpt">{{ post.excerpt | strip_html | truncatewords: 30 }}</p>
+          {% endif %}
+        </div>
+      </div>
     {% endfor %}
-  </ul>
-
-  <!-- <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p> -->
-
+  </div>
 </div>

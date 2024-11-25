@@ -27,7 +27,20 @@ $content-width:    800px;
 $on-palm:          600px;
 $on-laptop:        800px;
 
+// Add these new variables
+$card-radius: 8px;
+$card-padding: 16px;
+$grid-gap: 24px;
+$transition-speed: 0.2s;
 
+// Material Design elevation mixins
+@mixin elevation-1 {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+@mixin elevation-2 {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
 
 // Using media queries with like this:
 // @include media-query($on-palm) {
@@ -50,3 +63,79 @@ $on-laptop:        800px;
         "layout",
         "syntax-highlighting"
 ;
+
+.post-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: $grid-gap;
+  padding: $card-padding;
+}
+
+.post-card {
+  background: $background-color;
+  border-radius: $card-radius;
+  @include elevation-1;
+  transition: transform $transition-speed, box-shadow $transition-speed;
+  overflow: hidden;
+
+  &:hover {
+    transform: translateY(-4px);
+    @include elevation-2;
+  }
+
+  .post-image {
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .post-content {
+    padding: $card-padding;
+  }
+
+  .post-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: $spacing-unit / 2;
+  }
+
+  .post-date {
+    color: $grey-color;
+    font-size: $small-font-size;
+  }
+
+  .post-categories {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+
+    .category-chip {
+      background: $grey-color-light;
+      padding: 4px 12px;
+      border-radius: 16px;
+      font-size: $small-font-size;
+      color: $grey-color-dark;
+    }
+  }
+
+  .post-title {
+    margin: 0 0 12px 0;
+    font-size: 1.4em;
+
+    a {
+      color: $text-color;
+      text-decoration: none;
+
+      &:hover {
+        color: $brand-color;
+      }
+    }
+  }
+
+  .post-excerpt {
+    color: $grey-color;
+    font-size: $small-font-size;
+    margin: 0;
+  }
+}
